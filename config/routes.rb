@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   resources :teams do
     get :download_logo, on: :member
     get :return_multiple_sizes_logo, on: :member
-
   end
+
+  resources :fans, only: %i[index show create update]
 
   post 'bulk_upload', to: 'teams#bulk_upload'
   resources :managers, only: %i[index show create update]

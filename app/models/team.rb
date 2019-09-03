@@ -6,6 +6,7 @@ class Team < ApplicationRecord
   before_create :add_abbreviation_from_name!
 
   has_one :manager
+  has_many :fans
   has_many_attached :logo
 
   def add_abbreviation_from_name!
