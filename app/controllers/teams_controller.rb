@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'csv'
 
 class TeamsController < ApplicationController
   before_action :set_team, only: %i[update show destroy download_logo return_multiple_sizes_logo]
@@ -7,6 +8,11 @@ class TeamsController < ApplicationController
     @teams = Team.all
 
     TeamMailer.send_report.deliver_later
+  end
+
+  def bulk_upload
+    csv_file = CSV.read(bulk_params[:input_file].path)
+    BulkUploadJob.perform_later(csv_file)
   end
 
   def return_multiple_sizes_logo
@@ -54,6 +60,10 @@ class TeamsController < ApplicationController
   end
 
   private
+
+  def bulk_params
+    params.permit(:input_file)
+  end
 
   def permitted_params
     params.permit(:id)

@@ -9,8 +9,10 @@
     <% @teams.each do |team| %>
       <tr>
         <td><%= team.name %></td>
-        <td><%= team.manager.name %></td>
       </tr>
     <% end %>
+    <td>Added records: <%= @added_records%></td>
+    <td>Existing records: <%= @existing_records%></td>
+
   </tbody>
 </table>
